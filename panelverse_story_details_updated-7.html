@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d1d">
+<title>DREAMS OF YOUR PANELVERSE</title>
+<style>
+:root{--bg:#100d1d;--panel:#1c1830;--panel2:#25203c;--line:#39304f;--purple:#a78bfa;--pink:#ec8bdc;--muted:#b9b2ca;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--white);padding-bottom:82px}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+header{height:64px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:#191429;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.logo{font-size:15px;font-weight:800;letter-spacing:.5px;color:#d4c4ff}
+.header-actions{display:flex;gap:8px;align-items:center}
+.small-btn{background:var(--panel2);color:white;border:1px solid var(--line);padding:9px 12px;border-radius:20px}
+.container{max-width:760px;margin:auto;padding:18px 15px}
+.muted{color:var(--muted);font-size:13px;line-height:1.55}
+h2{font-size:21px;margin-bottom:8px}
+h3{font-size:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px;margin-bottom:15px}
+.primary{width:100%;background:linear-gradient(100deg,#8056ed,#b45bd7);color:white;padding:14px;border-radius:11px;font-weight:700;margin-top:8px}
+.secondary{background:var(--panel2);color:white;padding:11px 14px;border-radius:10px;border:1px solid var(--line)}
+input,textarea,select{width:100%;background:#121020;color:white;border:1px solid #44395e;border-radius:10px;padding:13px;margin:8px 0 13px;outline:none}
+textarea{min-height:100px;resize:vertical}
+label{font-size:13px;color:#d8d0e8}
+.tabs{display:flex;gap:8px;margin:16px 0}
+.tabs button{flex:1;padding:12px;border-radius:10px;background:var(--panel2);color:white}
+.tabs button.active,.chip.active{background:#7954d8}
+.message{font-size:13px;margin-top:10px;line-height:1.5}
+.error{color:#ff9aa8}.success{color:#8be6b0}
+.hero{border-radius:20px;overflow:hidden;min-height:230px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(0deg,rgba(10,8,20,.96),rgba(10,8,20,.08)),url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1000') center/cover;margin:15px 0 20px;border:1px solid #554276}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#d8c4ff;text-transform:uppercase;margin-bottom:8px}
+.hero h2{font-size:27px;max-width:400px}
+.hero p{color:#e0d9ec;font-size:13px;line-height:1.5;max-width:420px;margin:5px 0 12px}
+.hero button{align-self:flex-start;background:#a78bfa;color:#171126;padding:10px 15px;border-radius:9px;font-weight:bold}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}
+.section-head h2{margin:0}
+.section-head button{background:none;color:#c6aaff;font-size:12px}
+.search{margin:12px 0 13px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
+.chip{white-space:nowrap;padding:9px 14px;background:var(--panel2);border-radius:20px;color:#ddd5ed;font-size:12px}
+.story-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.story{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.story img{width:100%;height:170px;object-fit:cover;background:#29233c;display:block}
+.story-info{padding:11px}
+.story-info h3{font-size:14px;margin-bottom:6px;overflow-wrap:anywhere}
+.story-info p{font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:6px}
+.story-actions{display:flex;gap:7px;margin-top:9px}
+.like-btn,.read-btn{padding:8px 10px;border-radius:8px;color:white;background:#393052;font-size:11px}
+.read-btn{background:#7954d8}
+.empty{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+.nav{position:fixed;bottom:0;left:0;width:100%;display:flex;justify-content:space-around;background:#191429;border-top:1px solid var(--line);padding:10px 3px calc(10px + env(safe-area-inset-bottom));z-index:30}
+.nav button{background:none;color:#aaa1bd;font-size:11px;min-width:55px}
+.nav button span{display:block;font-size:20px;margin-bottom:4px}
+.nav button.active{color:#c6aaff}
+.avatar{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#d76cc7);display:grid;place-items:center;font-size:32px;margin:0 auto 12px}
+.detail-cover{width:100%;max-height:300px;object-fit:cover;border-radius:13px;margin:12px 0}
+.detail-top{position:relative}.detail-kicker{color:#cbb7ff;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin:5px 0 8px}
+.detail-title{font-size:27px;line-height:1.2;margin-bottom:9px;overflow-wrap:anywhere}
+.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.detail-tag{font-size:11px;color:#e9ddff;background:#33284f;border:1px solid #594477;padding:6px 10px;border-radius:20px}
+.detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0}
+.detail-stat{background:#151126;border:1px solid var(--line);border-radius:11px;padding:11px 6px;text-align:center}
+.detail-stat strong{display:block;font-size:17px;color:#d9c7ff}.detail-stat span{font-size:10px;color:var(--muted)}
+.detail-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}
+.detail-buttons button{margin:0}.detail-section{margin-top:18px}.detail-section h3{margin-bottom:9px}
+.chapter-empty{background:#151126;border:1px dashed #55476d;border-radius:12px;text-align:center;padding:20px;color:var(--muted);font-size:13px;line-height:1.6}
+
+@media(max-width:360px){.story-grid{grid-template-columns:1fr}.hero h2{font-size:23px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🌌 PANELVERSE</div>
+  <div class="header-actions">
+    <button class="small-btn hidden" id="logoutTop" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<section id="authPage" class="container">
+  <div style="text-align:center;padding:28px 5px 18px">
+    <div style="font-size:48px">🌌</div>
+    <h2 style="color:#cbb7ff">DREAMS OF YOUR PANELVERSE</h2>
+    <p class="muted">Read Stories • Create Worlds • Share Dreams</p>
+  </div>
+  <div class="card">
+    <div class="tabs">
+      <button id="loginTab" class="active" onclick="setMode('login')">Login</button>
+      <button id="signupTab" onclick="setMode('signup')">Create Account</button>
+    </div>
+    <form id="authForm">
+      <div id="usernameWrap" class="hidden">
+        <label>Username</label><input id="username" maxlength="30" placeholder="Choose a username">
+      </div>
+      <label>Email Address</label>
+      <input id="email" type="email" autocomplete="email" placeholder="Enter your email" required>
+      <label>Password</label>
+      <input id="password" type="password" minlength="8" placeholder="Minimum 8 characters" required>
+      <div id="roleWrap" class="hidden">
+        <label>Account Type</label>
+        <select id="role"><option value="Reader">Reader</option><option value="Creator">Creator</option><option value="Both">Reader + Creator</option></select>
+      </div>
+      <button id="authSubmit" class="primary" type="submit">Login</button>
+      <p id="authMessage" class="message" aria-live="polite"></p>
+    </form>
+    <p class="muted" style="text-align:center;margin-top:14px">Your story universe starts here ✨</p>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <section id="homePage" class="container">
+    <p class="eyebrow">WELCOME TO YOUR UNIVERSE</p>
+    <h2 id="welcomeTitle">Discover your next world ✨</h2>
+    <p class="muted">Explore stories, meet new worlds and follow every chapter.</p>
+    <div class="hero">
+      <span class="eyebrow">PANELVERSE FEATURED</span>
+      <h2>Every world has a story.</h2>
+      <p>Enter worlds of fantasy, action, cultivation and unforgettable adventures.</p>
+      <button onclick="showPage('explorePage',document.getElementById('navExplore'))">Explore Stories</button>
+    </div>
+    <div class="section-head"><h2>Explore Categories</h2></div>
+    <div class="chips">
+      <button class="chip active" onclick="filterCategory('All',this)">All</button>
+      <button class="chip" onclick="filterCategory('Manhwa',this)">Manhwa</button>
+      <button class="chip" onclick="filterCategory('Novel',this)">Novels</button>
+      <button class="chip" onclick="filterCategory('Fantasy',this)">Fantasy</button>
+      <button class="chip" onclick="filterCategory('Cultivation',this)">Cultivation</button>
+    </div>
+    <div class="section-head"><h2>Trending Stories 🔥</h2><button onclick="showPage('explorePage',document.getElementById('navExplore'))">See all</button></div>
+    <div id="homeStories" class="story-grid"></div>
+    <p id="homeEmpty" class="empty hidden">No stories yet. Be the first to create one!</p>
+    <div class="section-head"><h2>Latest Updates ✨</h2></div>
+    <p class="muted">New stories and chapters from the PanelVerse community will appear here.</p>
+  </section>
+
+  <section id="explorePage" class="container hidden">
+    <h2>Explore PanelVerse 🔍</h2>
+    <p class="muted">Find your next favourite story.</p>
+    <input id="searchInput" placeholder="Search title, genre or creator..." oninput="renderStories()">
+    <div class="chips">
+      <button class="chip active" onclick="filterCategory('All',this)">All</button>
+      <button class="chip" onclick="filterCategory('Manhwa',this)">Manhwa</button>
+      <button class="chip" onclick="filterCategory('Novel',this)">Novels</button>
+      <button class="chip" onclick="filterCategory('Fantasy',this)">Fantasy</button>
+      <button class="chip" onclick="filterCategory('Cultivation',this)">Cultivation</button>
+    </div>
+    <div id="allStories" class="story-grid"></div>
+    <p id="exploreEmpty" class="empty hidden">No stories found.</p>
+  </section>
+
+  <section id="createPage" class="container hidden">
+    <div class="card">
+      <h2>Create Your Story ✍️</h2>
+      <p class="muted">Bring your imagination into the PanelVerse.</p>
+      <form id="storyForm">
+        <label>Story Title</label><input id="storyTitle" maxlength="80" placeholder="Enter story title" required>
+        <label>Genre</label>
+        <select id="genre"><option>Fantasy</option><option>Action</option><option>Romance</option><option>Cultivation</option><option>Adventure</option><option>Drama</option><option>Martial Arts</option><option>System</option></select>
+        <label>Story Format</label>
+        <select id="storyStyle"><option value="Novel">Novel</option><option value="Manhwa">Manhwa</option><option value="Both">Novel + Manhwa</option></select>
+        <label>Description</label><textarea id="description" placeholder="Describe your story..." required></textarea>
+        <label>Story Status</label>
+        <select id="storyStatus"><option value="Ongoing">Ongoing</option><option value="Completed">Completed</option><option value="Hiatus">Hiatus</option></select>
+        <label>Cover Image (JPG / PNG / WEBP, max 1 MB)</label><input id="cover" type="file" accept="image/jpeg,image/png,image/webp" required>
+        <img id="imagePreview" class="detail-cover hidden" alt="Cover preview">
+        <button class="primary" id="publishButton" type="submit">Publish Story 🚀</button>
+        <p id="publishMessage" class="message"></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="profilePage" class="container hidden">
+    <div class="card" style="text-align:center">
+      <div class="avatar">👤</div>
+      <h2 id="profileName">User</h2>
+      <p class="muted" id="profileEmail"></p>
+      <p id="profileRole" style="color:#c6aaff;margin-top:9px"></p>
+    </div>
+    <div class="card">
+      <h3>My Account</h3>
+      <p class="muted" style="margin-top:14px">Username</p><p id="profileUsername"></p>
+      <p class="muted" style="margin-top:14px">My Published Stories</p><p id="myStoryCount">0</p>
+    </div>
+    <button class="primary" onclick="logout()">Logout</button>
+  </section>
+
+  <section id="detailPage" class="container hidden">
+    <button class="secondary" onclick="goBack()">← Back to stories</button>
+    <div class="card" style="margin-top:14px">
+      <div class="detail-top">
+        <img id="detailImage" class="detail-cover" alt="Story cover">
+        <p class="detail-kicker" id="detailKicker">PANELVERSE STORY</p>
+        <h1 class="detail-title" id="detailTitle"></h1>
+        <p class="muted" id="detailCreator"></p>
+        <div class="detail-tags" id="detailTags"></div>
+        <div class="detail-stats">
+          <div class="detail-stat"><strong id="detailViews">0</strong><span>VIEWS</span></div>
+          <div class="detail-stat"><strong id="detailLikes">0</strong><span>LIKES</span></div>
+          <div class="detail-stat"><strong id="detailChapters">0</strong><span>CHAPTERS</span></div>
+        </div>
+        <div class="detail-buttons">
+          <button class="primary" id="startReadingButton" onclick="startReading()">Start Reading</button>
+          <button class="secondary" id="bookmarkButton" onclick="toggleBookmark()">♡ Bookmark</button>
+        </div>
+      </div>
+    </div>
+    <div class="card detail-section">
+      <h3>📖 About This Story</h3>
+      <p id="detailDescription" style="line-height:1.75;color:#e5deef;white-space:pre-wrap"></p>
+    </div>
+    <div class="card detail-section">
+      <div class="section-head" style="margin:0 0 12px"><h3>Chapters & Episodes</h3><span class="muted" id="chapterFormatLabel"></span></div>
+      <div id="chapterList" class="chapter-empty">No chapters have been published yet.</div>
+      <p class="muted" id="creatorChapterHint" style="margin-top:12px"></p>
+    </div>
+  </section>
+</div>
+
+<nav id="bottomNav" class="nav hidden">
+  <button id="navHome" class="active" onclick="showPage('homePage',this)"><span>⌂</span>Home</button>
+  <button id="navExplore" onclick="showPage('explorePage',this)"><span>⌕</span>Explore</button>
+  <button id="navCreate" onclick="showPage('createPage',this)"><span>＋</span>Create</button>
+  <button id="navProfile" onclick="showPage('profilePage',this)"><span>◉</span>Profile</button>
+</nav>
+
+<script>
+"use strict";
+
+/* PanelVerse demo storage: safe when browser storage is blocked */
+const USER_KEY = "pv_users_v3";
+const STORY_KEY = "pv_stories_v3";
+const SESSION_KEY = "pv_session_v3";
+const BOOKMARK_KEY = "pv_bookmarks_v1";
+const memoryStore = Object.create(null);
+let currentUser = null;
+let authMode = "login";
+let activeCategory = "All";
+let previewURL = null;
+let previousPage = "homePage";
+
+function readStore(key, fallback) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (raw !== null) return JSON.parse(raw);
+  } catch (e) {}
+  return Object.prototype.hasOwnProperty.call(memoryStore,key) ? memoryStore[key] : fallback;
+}
+function writeStore(key, value) {
+  memoryStore[key] = value;
+  try { window.localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
+}
+function getSession() {
+  try { return window.sessionStorage.getItem(SESSION_KEY) || memoryStore[SESSION_KEY] || null; }
+  catch (e) { return memoryStore[SESSION_KEY] || null; }
+}
+function setSession(value) {
+  memoryStore[SESSION_KEY] = value;
+  try { window.sessionStorage.setItem(SESSION_KEY,value); } catch (e) {}
+}
+function clearSession() {
+  delete memoryStore[SESSION_KEY];
+  try { window.sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+}
+function createID() {
+  return "pv-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,10);
+}
+function demoHash(password) {
+  let hash = 2166136261;
+  for (let i=0;i<password.length;i++) { hash ^= password.charCodeAt(i); hash = Math.imul(hash,16777619); }
+  return (hash >>> 0).toString(16);
+}
+function setMode(mode) {
+  authMode = mode;
+  document.getElementById("usernameWrap").classList.toggle("hidden",mode !== "signup");
+  document.getElementById("roleWrap").classList.toggle("hidden",mode !== "signup");
+  document.getElementById("loginTab").classList.toggle("active",mode === "login");
+  document.getElementById("signupTab").classList.toggle("active",mode === "signup");
+  document.getElementById("authSubmit").textContent = mode === "login" ? "Login" : "Create Account";
+  document.getElementById("authMessage").textContent = "";
+}
+document.getElementById("authForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("authMessage");
+  message.textContent = "";
+  try {
+    const users = readStore(USER_KEY,[]);
+    if (password.length < 8) throw new Error("Password must have at least 8 characters.");
+    if (authMode === "signup") {
+      const username = document.getElementById("username").value.trim();
+      const role = document.getElementById("role").value;
+      if (username.length < 3) throw new Error("Username must have at least 3 characters.");
+      if (users.some(u => u.email === email)) throw new Error("This email is already registered. Please login.");
+      const user = {id:createID(),username,email,role,passwordHash:demoHash(password)};
+      users.push(user);
+      writeStore(USER_KEY,users);
+      document.getElementById("authForm").reset();
+      setMode("login");
+      message.textContent = "Account created successfully! Please login.";
+      message.className = "message success";
+    } else {
+      const user = users.find(u => u.email === email);
+      if (!user) throw new Error("Account not found. Please create an account first.");
+      if (user.passwordHash !== demoHash(password)) throw new Error("Incorrect password. Please try again.");
+      loginUser(user);
+    }
+  } catch (error) {
+    message.textContent = error.message || "Something went wrong.";
+    message.className = "message error";
+  }
+});
+function loginUser(user) {
+  currentUser = user;
+  setSession(user.id);
+  document.getElementById("authPage").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  document.getElementById("bottomNav").classList.remove("hidden");
+  document.getElementById("logoutTop").classList.remove("hidden");
+  document.getElementById("welcomeTitle").textContent = "Welcome, " + user.username + " ✨";
+  updateProfile();
+  renderStories();
+  showPage("homePage",document.getElementById("navHome"));
+}
+function logout() {
+  currentUser = null;
+  clearSession();
+  document.getElementById("authPage").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("bottomNav").classList.add("hidden");
+  document.getElementById("logoutTop").classList.add("hidden");
+  document.getElementById("authForm").reset();
+  setMode("login");
+}
+function showPage(page,button) {
+  const allowed = ["homePage","explorePage","createPage","profilePage","detailPage"];
+  if (!allowed.includes(page)) return;
+  if (page === "createPage" && currentUser && currentUser.role === "Reader") {
+    alert("Your account is Reader only. Create a Creator or Reader + Creator account to publish stories.");
+    return;
+  }
+  allowed.forEach(id => document.getElementById(id).classList.toggle("hidden",id !== page));
+  document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+  if (button && button.classList) button.classList.add("active");
+  if (page === "profilePage") updateProfile();
+  if (page === "homePage" || page === "explorePage") renderStories();
+}
+function filterCategory(category,button) {
+  activeCategory = category;
+  document.querySelectorAll(".chip").forEach(chip => chip.classList.remove("active"));
+  if (button) button.classList.add("active");
+  renderStories();
+}
+function storyCard(story) {
+  const card = document.createElement("article");
+  card.className = "story";
+  const img = document.createElement("img");
+  img.src = story.image; img.alt = story.title; img.loading = "lazy";
+  const info = document.createElement("div"); info.className = "story-info";
+  const title = document.createElement("h3"); title.textContent = story.title;
+  const meta = document.createElement("p"); meta.textContent = story.genre + " • " + story.style;
+  const creator = document.createElement("p"); creator.textContent = "By " + story.creator;
+  const actions = document.createElement("div"); actions.className = "story-actions";
+  const like = document.createElement("button"); like.className = "like-btn";
+  const liked = currentUser && Array.isArray(story.likes) && story.likes.includes(currentUser.id);
+  like.textContent = (liked ? "♥ " : "♡ ") + (story.likes || []).length;
+  like.onclick = () => toggleLike(story.id);
+  const read = document.createElement("button"); read.className = "read-btn"; read.textContent = "View";
+  read.onclick = () => openStory(story.id);
+  actions.append(like,read); info.append(title,meta,creator,actions); card.append(img,info);
+  return card;
+}
+function renderStories() {
+  const stories = readStore(STORY_KEY,[]);
+  const queryEl = document.getElementById("searchInput");
+  const query = queryEl ? queryEl.value.toLowerCase().trim() : "";
+  const filtered = stories.filter(s => {
+    const text = (s.title+" "+s.genre+" "+s.style+" "+s.creator).toLowerCase();
+    const categoryMatch = activeCategory === "All" ||
+      s.style.toLowerCase().includes(activeCategory.toLowerCase()) ||
+      s.genre.toLowerCase() === activeCategory.toLowerCase();
+    return text.includes(query) && categoryMatch;
+  });
+  const home = document.getElementById("homeStories");
+  const all = document.getElementById("allStories");
+  home.replaceChildren(); all.replaceChildren();
+  filtered.slice(0,4).forEach(s => home.appendChild(storyCard(s)));
+  filtered.forEach(s => all.appendChild(storyCard(s)));
+  document.getElementById("homeEmpty").classList.toggle("hidden",filtered.length !== 0);
+  document.getElementById("exploreEmpty").classList.toggle("hidden",filtered.length !== 0);
+}
+function toggleLike(id) {
+  if (!currentUser) return;
+  const stories = readStore(STORY_KEY,[]);
+  const story = stories.find(s => s.id === id);
+  if (!story) return;
+  if (!Array.isArray(story.likes)) story.likes = [];
+  const index = story.likes.indexOf(currentUser.id);
+  if (index >= 0) story.likes.splice(index,1); else story.likes.push(currentUser.id);
+  writeStore(STORY_KEY,stories); renderStories();
+}
+let activeStoryID = null;
+function openStory(id) {
+  const stories = readStore(STORY_KEY,[]);
+  const story = stories.find(s => s.id === id);
+  if (!story) return;
+  previousPage = document.getElementById("explorePage").classList.contains("hidden") ? "homePage" : "explorePage";
+  activeStoryID = id;
+  story.views = (Number(story.views) || 0) + 1;
+  writeStore(STORY_KEY,stories);
+  document.getElementById("detailImage").src = story.image;
+  document.getElementById("detailTitle").textContent = story.title;
+  document.getElementById("detailDescription").textContent = story.description || "No description added yet.";
+  document.getElementById("detailCreator").textContent = "✍️ Created by " + story.creator;
+  document.getElementById("detailKicker").textContent = (story.status || "Ongoing") + " • PANELVERSE ORIGINAL";
+  document.getElementById("detailViews").textContent = story.views;
+  document.getElementById("detailLikes").textContent = (story.likes || []).length;
+  document.getElementById("detailChapters").textContent = 0;
+  document.getElementById("detailTags").replaceChildren();
+  [story.genre, story.style, story.status || "Ongoing"].forEach(value => {
+    const tag = document.createElement("span"); tag.className = "detail-tag"; tag.textContent = value;
+    document.getElementById("detailTags").appendChild(tag);
+  });
+  document.getElementById("chapterFormatLabel").textContent = story.style === "Manhwa" ? "IMAGE EPISODES" : story.style === "Both" ? "NOVEL / MANHWA" : "TEXT CHAPTERS";
+  const ownsStory = currentUser && story.creatorID === currentUser.id && currentUser.role !== "Reader";
+  document.getElementById("creatorChapterHint").textContent = ownsStory ? "Creator tools for adding chapters will be available in the next build." : "New chapters will appear here when the creator publishes them.";
+  updateBookmarkButton();
+  showPage("detailPage",null);
+  renderStories();
+}
+function getBookmarks() {
+  const all = readStore(BOOKMARK_KEY,{});
+  return currentUser && Array.isArray(all[currentUser.id]) ? all[currentUser.id] : [];
+}
+function updateBookmarkButton() {
+  const saved = getBookmarks().includes(activeStoryID);
+  document.getElementById("bookmarkButton").textContent = saved ? "♥ Bookmarked" : "♡ Bookmark";
+}
+function toggleBookmark() {
+  if (!currentUser || !activeStoryID) return;
+  const all = readStore(BOOKMARK_KEY,{});
+  if (!Array.isArray(all[currentUser.id])) all[currentUser.id] = [];
+  const list = all[currentUser.id];
+  const index = list.indexOf(activeStoryID);
+  if (index >= 0) list.splice(index,1); else list.push(activeStoryID);
+  writeStore(BOOKMARK_KEY,all);
+  updateBookmarkButton();
+}
+function startReading() {
+  const story = readStore(STORY_KEY,[]).find(s => s.id === activeStoryID);
+  if (!story) return;
+  alert("This story has no chapters yet. The Chapter Creation and Reading system is our next development step!");
+}
+
+function goBack() {
+  showPage(previousPage,previousPage === "homePage" ? document.getElementById("navHome") : document.getElementById("navExplore"));
+}
+function updateProfile() {
+  if (!currentUser) return;
+  document.getElementById("profileName").textContent = currentUser.username;
+  document.getElementById("profileEmail").textContent = currentUser.email;
+  document.getElementById("profileRole").textContent = "✦ " + currentUser.role;
+  document.getElementById("profileUsername").textContent = currentUser.username;
+  document.getElementById("myStoryCount").textContent = readStore(STORY_KEY,[]).filter(s => s.creatorID === currentUser.id).length;
+}
+document.getElementById("cover").addEventListener("change",function() {
+  const file = this.files && this.files[0];
+  const preview = document.getElementById("imagePreview");
+  if (previewURL) { URL.revokeObjectURL(previewURL); previewURL = null; }
+  preview.classList.add("hidden");
+  if (!file) return;
+  if (!["image/jpeg","image/png","image/webp"].includes(file.type)) {
+    alert("Please choose a JPG, PNG or WEBP image."); this.value = ""; return;
+  }
+  if (file.size > 1024*1024) {
+    alert("Please choose an image smaller than 1 MB."); this.value = ""; return;
+  }
+  previewURL = URL.createObjectURL(file); preview.src = previewURL; preview.classList.remove("hidden");
+});
+document.getElementById("storyForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+  if (!currentUser) { alert("Please login first."); return; }
+  if (currentUser.role === "Reader") { alert("Reader accounts cannot publish stories."); return; }
+  const file = document.getElementById("cover").files[0];
+  if (!file) { alert("Please select a cover image."); return; }
+  const button = document.getElementById("publishButton");
+  const message = document.getElementById("publishMessage");
+  button.disabled = true;
+  const reader = new FileReader();
+  reader.onload = function() {
+    try {
+      const stories = readStore(STORY_KEY,[]);
+      stories.unshift({
+        id:createID(),
+        title:document.getElementById("storyTitle").value.trim(),
+        genre:document.getElementById("genre").value,
+        style:document.getElementById("storyStyle").value,
+        status:document.getElementById("storyStatus").value,
+        description:document.getElementById("description").value.trim(),
+        image:reader.result,
+        creator:currentUser.username,
+        creatorID:currentUser.id,
+        likes:[]
+      });
+      writeStore(STORY_KEY,stories);
+      message.textContent = "Your story has been published!";
+      message.className = "message success";
+      document.getElementById("storyForm").reset();
+      document.getElementById("imagePreview").classList.add("hidden");
+      if (previewURL) { URL.revokeObjectURL(previewURL); previewURL = null; }
+      renderStories(); updateProfile();
+      showPage("homePage",document.getElementById("navHome"));
+    } catch (e) {
+      message.textContent = "Could not save this story. Try a smaller cover image.";
+      message.className = "message error";
+    }
+    button.disabled = false;
+  };
+  reader.onerror = function() {
+    message.textContent = "Image could not be read."; message.className = "message error"; button.disabled = false;
+  };
+  reader.readAsDataURL(file);
+});
+function restoreSession() {
+  const id = getSession();
+  if (!id) return;
+  const user = readStore(USER_KEY,[]).find(u => u.id === id);
+  if (user) loginUser(user); else clearSession();
+}
+restoreSession();
+</script>
+</body>
+</html>
